@@ -1,10 +1,12 @@
 import React from 'react'
+import Header from '../Header/Header'
+import '../../css/rootStylesheet.css'
 
 function Wrapper () {
   return (
-    <>
-      <h1>Hello World</h1>
-    </>
+    <div className='wrapper'>
+      <Header />
+    </div>
   )
 }
 

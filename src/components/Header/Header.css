@@ -1,0 +1,49 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0;
+  border-bottom: 1px solid #fff;
+  color: #fff;
+}
+
+.header__logo {
+  flex-grow: 1;
+  padding-left: 120px;
+}
+
+.header__text {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 15px;
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.header__buttons {
+  display: flex;
+  flex-direction: row;
+  width: 120px;
+}
+
+.header__button {
+  display: flex;
+  flex-direction: row;
+  padding: 0 10px;
+  align-items: center;
+}
+
+.header__button button:hover {
+  cursor: pointer;
+}
+
+.header__button button {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 22px;
+}

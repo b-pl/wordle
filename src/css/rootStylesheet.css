@@ -1,0 +1,12 @@
+:root {
+  --color-background: #121212;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--color-background);
+  font-family: 'Courier New', Courier, monospace;
+}
