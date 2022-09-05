@@ -4,7 +4,6 @@ import '../../css/rootStylesheet.css'
 import './Wrapper.css'
 import Row from '../Row/Row'
 import Keyboard from '../Keyboard/Keyboard'
-// import 'typeface-roboto'
 
 function Wrapper () {
   const rows = useState(Array(6).fill(<Row />))
