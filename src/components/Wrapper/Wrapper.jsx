@@ -4,6 +4,7 @@ import '../../css/rootStylesheet.css'
 import './Wrapper.css'
 import Row from '../Row/Row'
 import Keyboard from '../Keyboard/Keyboard'
+// import 'typeface-roboto'
 
 function Wrapper () {
   const rows = useState(Array(6).fill(<Row />))
@@ -11,19 +12,19 @@ function Wrapper () {
   return (
     <div className='wrapper'>
       <Header />
-      <div className='rows__container'>
-        <div className='rows'>
-          {
-            rows && rows.map((row) => {
-              return row
-            })
-          }
+      <div className='rows__wrapper'>
+        <div className='rows__container'>
+          <div className='rows'>
+            {
+              rows && rows.map((row) => {
+                return row
+              })
+            }
+          </div>
         </div>
       </div>
 
-      <div className='keyboard__container'>
-        <Keyboard />
-      </div>
+      <Keyboard />
     </div>
   )
 }

@@ -1,0 +1,15 @@
+button.key {
+  height: 50px;
+  flex: 1;
+  margin-right: 5px;
+  background-color: #818384;
+  border: 1px solid #818384;
+  border-radius: 4px;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 700;
+}
+
+button.key:hover {
+  cursor: pointer;
+}
