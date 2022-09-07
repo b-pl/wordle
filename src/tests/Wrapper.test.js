@@ -1,21 +1,18 @@
-import { render, screen } from '@testing-library/react'
-import Header from '../components/Header/Header'
+import { render } from '@testing-library/react'
 import Wrapper from '../components/Wrapper/Wrapper'
 
-// test('Contains header', () => {
-//   render(<Wrapper />)
-//   const headerElement = render(<Header />)
-//   expect(headerElement).toBe(true)
-// })
-
-test('Contains 6 rows', () => {
+test('Contains skeleton', () => {
   render(<Wrapper />)
+  const wrapper = document.querySelector('.wrapper')
+  const rowsWrapper = document.querySelector('.rows__wrapper')
+  const rowsContainer = document.querySelector('.rows__container')
   const rowsElements = document.querySelectorAll('.row').length
-  expect(rowsElements).toBe(6)
-})
-
-test('Contains keyboard container', () => {
-  render(<Wrapper />)
   const keyboardElement = document.querySelector('.keyboard__container')
+
+
+  expect(wrapper).toBeVisible()
+  expect(rowsWrapper).toBeVisible()
+  expect(rowsContainer).toBeVisible()
+  expect(rowsElements).toBe(6)
   expect(keyboardElement).toBeVisible()
 })

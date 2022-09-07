@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import Row from '../components/Row/Row'
 
 test('Renders 5 elements (keys)', () => {
