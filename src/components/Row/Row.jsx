@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Character from '../Character/Character'
+import Character from '../Character/Tile'
 import './Row.css'
 
 function Row () {

@@ -1,11 +1,11 @@
 import React from 'react'
-import './Character.css'
+import './Tile.css'
 
-function Character () {
+function Tile () {
   return (
     <div className='character__wrapper'>
     </div>
   )
 }
 
-export default Character
+export default Tile
