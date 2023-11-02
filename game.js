@@ -29,24 +29,24 @@ class Game {
   }
 
   // check correctness of letter positions
-  checkWord() {
-    if (this.userWord === this.answerWord) return this.gameWon()
+  isWon = () => {
+    if (this.userWord.toString() === this.answerWord.toString()) return true
     
     const response = {
-      isInRightPosition: [],
+      isInCorrectPosition: [],
       isInWord: []
     }
 
     for (let [index, letter] of this.userWord.entries()) {
-      if (letter === this.answerWord[index]) response.isInRightPosition.push(index)
+      if (letter === this.answerWord[index]) response.isInCorrectPosition.push(index)
       else if (this.answerWord.includes(letter)) response.isInWord.push(index)
     }
 
     return response
   }
 
-  gameWon() {
-    alert('congrats, you won')
+  resetGame() {
+    console.log('xD')
   }
 
   // DEBUG

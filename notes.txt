@@ -1,0 +1,17 @@
+Entering letters
+
+When user clicks on keyboard key
+- Set value of this key to data-is_active tile
+- Check if last tile in row is filled. If it is, disabled keyboard keys with exception of keyboard special keys
+- Set data-is_active attribute to false for key which is set to true. Set data-is_active attr to true for next tile.
+
+1. Sprawdź czy jest to ostatni tile w rzędzie -> jeśli tak to nic nie rób
+2. Wrzuć value z klawisza do tile
+3. Ustaw kolejny tile na active
+
+
+  // setup active tile
+  // setup active row (?)
+  // setup classes/colors for entered word
+  // remove letter
+  // enter click (no word in dictionary / too short / OK)
