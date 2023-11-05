@@ -2347,6 +2347,14 @@ video {
   content: var(--tw-content);
 }
 
+[data-incorrectposition=true] {
+  background: lightgreen;
+}
+
+[data-inword=true] {
+  background: lightblue;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

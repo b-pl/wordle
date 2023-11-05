@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[data-incorrectposition=true] {
+  background: lightgreen;
+}
+
+[data-inword=true] {
+  background: lightblue;
+}

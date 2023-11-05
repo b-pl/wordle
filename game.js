@@ -34,18 +34,25 @@ class Game {
    */
   isWon = () => {
     const response = {
-      correctPositionTileId: [],
-      inWordTileId: []
+      correctPositionTile: [],
+      inWordTile: []
     }
 
+    const res = [];
+
+    // for (let [index, letterObj] of this.userWord.entries()) {
+    //   if (letterObj.letter === this.answerWord[index]) response.correctPositionTile.push({id: letterObj.tileId, letter: letterObj.letter})
+    //   else if (this.answerWord.includes(letterObj.letter)) response.inWordTile.push({id: letterObj.tileId, letter: letterObj.letter})
+    // }
     for (let [index, letterObj] of this.userWord.entries()) {
-      if (letterObj.letter === this.answerWord[index]) response.correctPositionTileId.push(letterObj.tileId)
-      else if (this.answerWord.includes(letterObj.letter)) response.inWordTileId.push(letterObj.tileId)
+      if (letterObj.letter === this.answerWord[index]) res.push({id: letterObj.tileId, letter: letterObj.letter, type: 'correctPosition'})
+      else if (this.answerWord.includes(letterObj.letter)) res.push({id: letterObj.tileId, letter: letterObj.letter, type: 'inWord'})
     }
 
-    if (response.correctPositionTileId.length === 5) return true
+    if (response.correctPositionTile.length === 5) return true
 
-    return response
+    // return response
+    return res
   }
 
   resetGame() {

@@ -7,6 +7,7 @@ class BoardControl {
     this.activeRowId = 1;
     this.correctPositions = [];
     this.inWordPositions = [];
+    this.userInputResults = [];
   }
 
   /**
@@ -36,15 +37,15 @@ class BoardControl {
 
   /**
    * Toggles data-is_active attribute
-   * @param {array} tiles - array of selectors to toggle data-is_active attribute
+   * @param {array} elements - array of selectors to toggle data-is_active attribute
    */
-  toggleTilesActiveAttribute(tiles) {
-    // console.group('toggleTilesActiveAttribute')
+  toggleActiveAttribute(elements) {
+    // console.group('toggleActiveAttribute')
     // console.log(tiles)
-    // console.groupEnd('toggleTilesActiveAttribute')
-    tiles.forEach((tile) => {
-      if (tile.getAttribute('data-is_active') === 'true') tile.setAttribute('data-is_active', 'false')
-      else tile.setAttribute('data-is_active', 'true')
+    // console.groupEnd('toggleActiveAttribute')
+    elements.forEach((element) => {
+      if (element.getAttribute('data-is_active') === 'true') element.setAttribute('data-is_active', 'false')
+      else element.setAttribute('data-is_active', 'true')
     })
 
     return
@@ -62,16 +63,16 @@ class BoardControl {
 
     if (!position) {
       const prevTile = this.activeTileId - 1 !== 0 && isRowActive ? document.querySelector(`[data-tile_id="${this.activeTileId - 1}"]`) : false;
-      const tileToClear = activeTile.textContent ? activeTile : prevTile;
-      // console.group('setActiveTile')
-      // console.log(`@params: position = ${position}, goToNextRow = ${goToNextRow}`)
-      // console.log(`function consts: activeTile = ${activeTile}, isRowActive = ${isRowActive}`)
-      // console.log(`!position consts: prevTile = ${prevTile}, tileToClear = ${tileToClear}`)
-      // console.groupEnd('setActiveTile')
+      const tileToClear = activeTile.textContent ? activeTile : (prevTile.parentElement.getAttribute('data-is_active') === 'true' ? prevTile : false );
+      console.group('setActiveTile')
+      console.log(`@params: position = ${position}, goToNextRow = ${goToNextRow}`)
+      console.log(`function consts: activeTile = ${activeTile.getAttribute('data-tile_id')}, isRowActive = ${isRowActive}`)
+      console.log(`!position consts: prevTile = ${prevTile.getAttribute('data-tile_id')}, tileToClear = ${tileToClear.getAttribute('data-tile_id')}`)
+      console.groupEnd('setActiveTile')
       if (tileToClear) this.clearTile(tileToClear);
       if (!prevTile) return;
 
-      this.toggleTilesActiveAttribute([prevTile, activeTile]);
+      this.toggleActiveAttribute([prevTile, activeTile]);
       this.updateActiveTileId(0);
 
       return
@@ -80,11 +81,64 @@ class BoardControl {
     // set next tile as active
     if (position && ((this.activeTileId % 5 !== 0 ) || goToNextRow)) {
       const nextTile = document.querySelector(`[data-tile_id="${this.activeTileId + 1}"]`);
-      this.toggleTilesActiveAttribute([activeTile, nextTile])
+      this.toggleActiveAttribute([activeTile, nextTile])
       this.updateActiveTileId(1);
-      if (goToNextRow) this.updateActiveRowId();
+      if (goToNextRow) {
+        const currentRow = document.querySelector(`[data-row_id="${this.activeRowId}"]`);
+        const nextRow = document.querySelector(`[data-row_id="${this.activeRowId + 1}"]`);
+        this.updateActiveRowId();
+        this.toggleActiveAttribute([currentRow, nextRow])
+      }
 
       return
+    }
+  }
+
+  isRowComplete() {
+    let isComplete = true;
+    const tiles = document.querySelectorAll(`[data-row_id="${this.activeRowId}"] .tile`);
+
+    for (let tile of tiles) {
+      if (tile.textContent === '') {
+        isComplete = false;
+        break;
+      }
+    }
+
+    return isComplete
+  }
+
+  markTilesAndKeys() {
+    const rowIndexInArray = this.activeRowId - 1;
+    const userInputRowInArray = this.userInputResults[rowIndexInArray];
+    // console.log(userInputRowInArray)
+    const uniqueinWordPositionsRowInArray = userInputRowInArray.sort((a, b) => a.type > b.type ? 1 : -1).reduce((accumulator, current) => {
+      if (!accumulator.find((item) => item.letter === current.letter)) {
+        accumulator.push(current);
+      }
+      return accumulator;
+    }, []);
+
+    for (let el of uniqueinWordPositionsRowInArray) {
+      if (el.type === 'correctPosition') {
+        document.querySelector(`[data-tile_id="${el.id}"]`).setAttribute('data-inCorrectPosition', 'true');
+
+        // to do funkcji
+        // przy correctPosition wykrywać czy key jest oznaczony jako inWord -> jeśli tak to zmienić na correctPosition
+        const keyboardKey = document.querySelector(`.keyboard_key[value="${el.letter.toLowerCase()}"]`);
+        if (keyboardKey && !keyboardKey.getAttribute('data-marked')) {
+          keyboardKey.setAttribute('data-marked', 'true');
+          keyboardKey.setAttribute('data-inCorrectPosition', 'true');
+        }
+      } else {
+        document.querySelector(`[data-tile_id="${el.id}"]`).setAttribute('data-inWord', 'true');
+
+        const keyboardKey = document.querySelector(`.keyboard_key[value="${el.letter.toLowerCase()}"]`);
+        if (keyboardKey && !keyboardKey.getAttribute('data-marked')) {
+          keyboardKey.setAttribute('data-marked', 'true');
+          keyboardKey.setAttribute('data-inWord', 'true');
+        }
+      }
     }
   }
 
@@ -106,18 +160,19 @@ class BoardControl {
   }
 
   enterKeyEvent() {
+    if (!this.isRowComplete()) return false;
     this.game.setUserWord(this.createUserWordArray())
 
     const isWon = this.game.isWon();
     console.log(isWon)
     if (isWon === true) return this.gameWon();
 
-    if (isWon.correctPositionTileId.length) this.correctPositions.push(isWon.correctPositionTileId)
-    if (isWon.inWordTileId.length) this.inWordPositions.push(isWon.inWordTileId)
+    this.userInputResults.push(isWon)
 
-    console.log(this.correctPositions)
-    console.log(this.inWordPositions)
+    this.markTilesAndKeys();
     this.setActiveTile(1, true);
+
+    return
   }
 
   handleKeyboardKeyClick() {
@@ -141,8 +196,6 @@ class BoardControl {
 
     // physical keyboard events
     window.addEventListener('keydown', (e) => {
-      // console.log(e.code)
-      // console.log(e.key)
       // letters
       if (e.code.includes('Key')) {
         const activeTile = document.querySelector(`[data-tile_id="${this.activeTileId}"]`);
