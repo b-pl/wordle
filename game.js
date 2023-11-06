@@ -28,25 +28,28 @@ class Game {
     this.userWord = word
   }
 
-  // check correctness of letter positions
-  checkWord() {
-    if (this.userWord === this.answerWord) return this.gameWon()
-    
-    const response = {
-      isInRightPosition: [],
-      isInWord: []
+  /**
+   * Checks if games is won
+   * @returns true if all letters are in correct position || response object w/ correctPosition/inWord tiles ids
+   */
+  isWon = () => {
+    const res = [];
+
+    // Mark letters in correctPosition or inWord
+    for (let [index, letterObj] of this.userWord.entries()) {
+      if (letterObj.letter === this.answerWord[index]) res.push({id: letterObj.tileId, letter: letterObj.letter, type: 'correctPosition'})
+      else if (this.answerWord.includes(letterObj.letter)) res.push({id: letterObj.tileId, letter: letterObj.letter, type: 'inWord'})
     }
 
-    for (let [index, letter] of this.userWord.entries()) {
-      if (letter === this.answerWord[index]) response.isInRightPosition.push(index)
-      else if (this.answerWord.includes(letter)) response.isInWord.push(index)
-    }
-
-    return response
+    // Count correctPositions and return true or array
+    return res.reduce((acc, curr) => {
+      if (curr.type === 'correctPosition') acc += 1;
+        return acc;
+    }, 0) === 5 ? true : res
   }
 
-  gameWon() {
-    alert('congrats, you won')
+  resetGame() {
+    console.log('xD')
   }
 
   // DEBUG

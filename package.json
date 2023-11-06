@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "tail": "npx tailwindcss -i ./styles.css -o ./style.css --watch"
+  }
+}

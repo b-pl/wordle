@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[data-marked="correctPosition"] {
+  background: lightgreen;
+}
+
+[data-marked="inWord"] {
+  background: lightblue;
+}
+
+[data-iswon=true] > * {
+  background: lightgreen;
+}

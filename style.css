@@ -787,8 +787,8 @@ video {
   height: 6rem;
 }
 
-.w-1\/5 {
-  width: 20%;
+.w-1\/12 {
+  width: 8.333333%;
 }
 
 .w-24 {
@@ -1305,6 +1305,10 @@ video {
 
 .justify-items-stretch {
   justify-items: stretch;
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .gap-4 {
@@ -1855,9 +1859,23 @@ video {
      object-fit: scale-down;
 }
 
+.p-4 {
+  padding: 1rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .py-4 {
@@ -1919,6 +1937,16 @@ video {
 
 .align-super {
   vertical-align: super;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .font-bold {
@@ -2317,6 +2345,18 @@ video {
 .content-\[\'this-is-also-valid\]-weirdly-enough\'\] {
   --tw-content: 'this-is-also-valid]-weirdly-enough';
   content: var(--tw-content);
+}
+
+[data-marked="correctPosition"] {
+  background: lightgreen;
+}
+
+[data-marked="inWord"] {
+  background: lightblue;
+}
+
+[data-iswon=true] > * {
+  background: lightgreen;
 }
 
 @media (min-width: 640px) {
