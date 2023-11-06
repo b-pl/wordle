@@ -20,14 +20,3 @@ When user clicks on keyboard key
 fix clearing tiles (multiple rows)
 detect isRowComplete - enter key event fix
 mark tiles and keyboard keys
-
-
-mark tiles
----
-trzeba to przenieść do jednej tablicy z oznaczeniem czy jest correctPosition czy isInWord
-posortować po correctPosition
-zrobić reduce => wynikiem będą litery unique z odpowiednim oznaczeniem
-
-
-ESLINT
-DOKOŃCZYK MARK_TILES
