@@ -33,26 +33,19 @@ class Game {
    * @returns true if all letters are in correct position || response object w/ correctPosition/inWord tiles ids
    */
   isWon = () => {
-    const response = {
-      correctPositionTile: [],
-      inWordTile: []
-    }
-
     const res = [];
 
-    // for (let [index, letterObj] of this.userWord.entries()) {
-    //   if (letterObj.letter === this.answerWord[index]) response.correctPositionTile.push({id: letterObj.tileId, letter: letterObj.letter})
-    //   else if (this.answerWord.includes(letterObj.letter)) response.inWordTile.push({id: letterObj.tileId, letter: letterObj.letter})
-    // }
+    // Mark letters in correctPosition or inWord
     for (let [index, letterObj] of this.userWord.entries()) {
       if (letterObj.letter === this.answerWord[index]) res.push({id: letterObj.tileId, letter: letterObj.letter, type: 'correctPosition'})
       else if (this.answerWord.includes(letterObj.letter)) res.push({id: letterObj.tileId, letter: letterObj.letter, type: 'inWord'})
     }
 
-    if (response.correctPositionTile.length === 5) return true
-
-    // return response
-    return res
+    // Count correctPositions and return true or array
+    return res.reduce((acc, curr) => {
+      if (curr.type === 'correctPosition') acc += 1;
+        return acc;
+    }, 0) === 5 ? true : res
   }
 
   resetGame() {

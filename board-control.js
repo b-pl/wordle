@@ -1,5 +1,3 @@
-import Game from './game.js'
-
 class BoardControl {
   constructor() {
     this.game = undefined;
@@ -64,11 +62,11 @@ class BoardControl {
     if (!position) {
       const prevTile = this.activeTileId - 1 !== 0 && isRowActive ? document.querySelector(`[data-tile_id="${this.activeTileId - 1}"]`) : false;
       const tileToClear = activeTile.textContent ? activeTile : (prevTile.parentElement.getAttribute('data-is_active') === 'true' ? prevTile : false );
-      console.group('setActiveTile')
-      console.log(`@params: position = ${position}, goToNextRow = ${goToNextRow}`)
-      console.log(`function consts: activeTile = ${activeTile.getAttribute('data-tile_id')}, isRowActive = ${isRowActive}`)
-      console.log(`!position consts: prevTile = ${prevTile.getAttribute('data-tile_id')}, tileToClear = ${tileToClear.getAttribute('data-tile_id')}`)
-      console.groupEnd('setActiveTile')
+      // console.group('setActiveTile')
+      // console.log(`@params: position = ${position}, goToNextRow = ${goToNextRow}`)
+      // console.log(`function consts: activeTile = ${activeTile.getAttribute('data-tile_id')}, isRowActive = ${isRowActive}`)
+      // console.log(`!position consts: prevTile = ${prevTile.getAttribute('data-tile_id')}, tileToClear = ${tileToClear.getAttribute('data-tile_id')}`)
+      // console.groupEnd('setActiveTile')
       if (tileToClear) this.clearTile(tileToClear);
       if (!prevTile) return;
 
@@ -108,36 +106,52 @@ class BoardControl {
     return isComplete
   }
 
-  markTilesAndKeys() {
+  /**
+   * Mark keyboard key as correctPosition letter or inWord letter
+   * @param {char} letterToMark 
+   * @param {string} typeOfMark - 'correctPosition' or 'inWord'
+   */
+  markKeys(letterToMark, typeOfMark) {
+    const keyboardKey = document.querySelector(`.keyboard_key[value="${letterToMark.toLowerCase()}"]`);
+    const isCorrectPosition = keyboardKey.getAttribute('data-marked') === 'correctPosition' ? true : false;
+    // console.group('markKeys')
+    // console.log(`keyboardKey = ${keyboardKey.getAttribute('value')}`)
+    // console.log(`inCorrectPosition = ${isCorrectPosition}`)
+    // console.groupEnd('markKeys')
+
+    if (typeOfMark === 'correctPosition') return keyboardKey.setAttribute('data-marked', 'correctPosition')
+    if (typeOfMark === 'inWord' && !isCorrectPosition) return keyboardKey.setAttribute('data-marked', 'inWord')
+  }
+
+  /**
+   * Marks tiles and keys as inCorrectPosition or inWord
+   * If isWon === true, mark all tiles as correct
+   * @param {bool} isWon 
+   */
+  markTilesAndKeys(isWon) {
+    if (isWon) return document.querySelector('.row[data-is_active="true"]').setAttribute('data-iswon', 'true')
+
     const rowIndexInArray = this.activeRowId - 1;
     const userInputRowInArray = this.userInputResults[rowIndexInArray];
     // console.log(userInputRowInArray)
-    const uniqueinWordPositionsRowInArray = userInputRowInArray.sort((a, b) => a.type > b.type ? 1 : -1).reduce((accumulator, current) => {
-      if (!accumulator.find((item) => item.letter === current.letter)) {
-        accumulator.push(current);
-      }
-      return accumulator;
-    }, []);
+    const uniqueinWordPositionsRowInArray = userInputRowInArray
+      .sort((a, b) => a.type > b.type ? 1 : -1)
+      .reduce((accumulator, current) => {
+        if (!accumulator.find((item) => item.letter === current.letter)) {
+          accumulator.push(current);
+        }
+        return accumulator;
+      }, []);
 
     for (let el of uniqueinWordPositionsRowInArray) {
       if (el.type === 'correctPosition') {
-        document.querySelector(`[data-tile_id="${el.id}"]`).setAttribute('data-inCorrectPosition', 'true');
+        document.querySelector(`[data-tile_id="${el.id}"]`).setAttribute('data-marked', 'correctPosition');
 
-        // to do funkcji
-        // przy correctPosition wykrywać czy key jest oznaczony jako inWord -> jeśli tak to zmienić na correctPosition
-        const keyboardKey = document.querySelector(`.keyboard_key[value="${el.letter.toLowerCase()}"]`);
-        if (keyboardKey && !keyboardKey.getAttribute('data-marked')) {
-          keyboardKey.setAttribute('data-marked', 'true');
-          keyboardKey.setAttribute('data-inCorrectPosition', 'true');
-        }
+        this.markKeys(el.letter, 'correctPosition')
       } else {
-        document.querySelector(`[data-tile_id="${el.id}"]`).setAttribute('data-inWord', 'true');
+        document.querySelector(`[data-tile_id="${el.id}"]`).setAttribute('data-marked', 'inWord');
 
-        const keyboardKey = document.querySelector(`.keyboard_key[value="${el.letter.toLowerCase()}"]`);
-        if (keyboardKey && !keyboardKey.getAttribute('data-marked')) {
-          keyboardKey.setAttribute('data-marked', 'true');
-          keyboardKey.setAttribute('data-inWord', 'true');
-        }
+        this.markKeys(el.letter, 'inWord')
       }
     }
   }
@@ -163,13 +177,14 @@ class BoardControl {
     if (!this.isRowComplete()) return false;
     this.game.setUserWord(this.createUserWordArray())
 
-    const isWon = this.game.isWon();
-    console.log(isWon)
-    if (isWon === true) return this.gameWon();
+    const isWon = this.game.isWon();    
+    if (isWon === true) {
+      this.markTilesAndKeys(true);
+      return this.gameWon();
+    }
 
     this.userInputResults.push(isWon)
-
-    this.markTilesAndKeys();
+    this.markTilesAndKeys()
     this.setActiveTile(1, true);
 
     return
@@ -189,9 +204,7 @@ class BoardControl {
         this.setActiveTile(1);
       })
     })
-
     backspaceKey.addEventListener('click', () => this.setActiveTile(0));
-
     enterKey.addEventListener('click', () => this.enterKeyEvent())
 
     // physical keyboard events
@@ -215,7 +228,7 @@ class BoardControl {
   }
 
   gameWon = () => {
-    return alert('You\'ve won!')
+    return console.log('You\'ve won!')
   }
 
   init = (game) => {
