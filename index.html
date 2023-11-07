@@ -8,8 +8,13 @@
   <script type='module' src="/index.js"></script>
   <script type='module' src="/game.js"></script>
   <script type='module' src="/board-control.js"></script>
+  <script type='module' src="/dictionary.js"></script>
 </head>
-<body class='flex'>
+<body class='flex flex-wrap'>
+  <!-- <div class='header flex justify-center border-b-2 border-solid border-black basis-full my-8 px-4 py-8'>
+    <button class='button --howtoplay'>How to play?</button>
+  </div> -->
+
   <div class='container mx-auto md:max-w-3xl flex flex-col gap-4 px-4 py-4 text-4xl uppercase'>
     <div class='row flex gap-4 justify-center' data-row_id='1' data-is_active='true'>
       <div class='tile w-24 h-24 border border-solid border-black flex justify-center items-center' data-tile_id='1' data-is_active='true'></div>
@@ -102,5 +107,11 @@
       <div class='keyboard_key keyboard_key--special --backspace w-1/12 border border-solid border-black text-lg p-4 flex justify-center items-center uppercase' value='bcksp'>bcksp</div>
     </div>
   </div>
+
+  <!-- <dialog id='how_to_play'>
+    <div class='how_to_play'>
+      
+    </div>
+  </dialog> -->
 </body>
 </html>
