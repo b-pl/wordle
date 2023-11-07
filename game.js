@@ -1,15 +1,17 @@
-const dictionary = [
-  'DOMEK'.split(''),
-  // 'RYSIK'.split(''),
-  // 'KOZAK'.split('')
-]
+import Dictionary from './dictionary.js';
+
+// const dictionary = [
+//   'DOMEK'.split(''),
+//   // 'RYSIK'.split(''),
+//   // 'KOZAK'.split('')
+// ]
 
 class Game {
   constructor() {
     // pobieranie danych z localStorage w przypadku niedokończonej gry
     // pobranie słownika haseł
-    this.localDictionary = dictionary
-    this.answerWord = this.drawWord()
+    this.localDictionary = Dictionary
+    this.answerWord = this.drawWord().toUpperCase().split('')
     this.userWord = ''
   }
 
