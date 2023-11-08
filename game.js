@@ -1,11 +1,5 @@
 import Dictionary from './dictionary.js';
 
-// const dictionary = [
-//   'DOMEK'.split(''),
-//   // 'RYSIK'.split(''),
-//   // 'KOZAK'.split('')
-// ]
-
 class Game {
   constructor() {
     // pobieranie danych z localStorage w przypadku niedokończonej gry
@@ -34,7 +28,7 @@ class Game {
    * Checks if games is won
    * @returns true if all letters are in correct position || response object w/ correctPosition/inWord tiles ids
    */
-  isWon = () => {
+  isWon() {
     const res = [];
 
     // Mark letters in correctPosition or inWord
@@ -51,7 +45,8 @@ class Game {
   }
 
   resetGame() {
-    console.log('xD')
+    this.answerWord = this.drawWord().toUpperCase().split('');
+    this.userWord = '';
   }
 
   // DEBUG
