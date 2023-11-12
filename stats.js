@@ -1,6 +1,7 @@
 import Timer from './timer.js'
 
 const stats = {
+  currentTime: 0,
   lowTime: 0,
   hightTime: 0,
   timesPlayed: 0,
@@ -8,14 +9,12 @@ const stats = {
   timesLost: 0,
   currentWinStreak: 0,
   highestWinStreak: 0,
-  guessDist: [
-    {try: 1, times: 0},
-    {try: 2, times: 0},
-    {try: 3, times: 0},
-    {try: 4, times: 0},
-    {try: 5, times: 0},
-    {try: 6, times: 0}
-  ]
+  guess1: 0,
+  guess2: 0,
+  guess3: 0,
+  guess4: 0,
+  guess5: 0,
+  guess6: 0
 }
 
 class Stats {
@@ -39,12 +38,20 @@ class Stats {
 
   /**
    * Sets stats
+   * Alternativaly updates localStorage
    * @param {object} stats
+   * @param {bool} updateLocalStorage
    */
-  setStats({...stats}) {
-    if (stats) {
+  setStats({...stats}, updateLocalStorage) {
+    if (stats && typeof(stats) === 'object') {
       this.stats = {...this.stats, ...stats}
-    } 
+    }
+
+    if (updateLocalStorage) this.setLocalStorage();
+
+    this._consoleStats();
+
+    return
   }
 
   /**
@@ -62,6 +69,20 @@ class Stats {
     }
   
     return this.stats;
+  }
+
+  _consoleStats() {
+    console.group('module stats:')
+    for (let [key, value] of Object.entries(this.stats)) {
+      console.log(`${key}: ${value}`)
+    }
+    console.groupEnd('module stats:')
+
+    console.group('localStorage stats:')
+    for (let [key, value] of Object.entries(JSON.parse(localStorage.getItem('stats')))) {
+      console.log(`${key}: ${value}`)
+    }
+    console.groupEnd('localStorage stats:')
   }
 
 }

@@ -4,13 +4,12 @@ class Timer {
     this.timer = undefined;
   }
 
-  getTime() {
-    return this.currentTime;
-  }
-
   increaseTime() {
-    console.log(this.currentTime)
-    this.currentTime += 1
+    // console.log(this.currentTime)
+    // debug
+    document.querySelector('.debug_timer').textContent = this.getFormattedTime();
+
+    this.currentTime += 1;
   }
 
   start(startTime) {
@@ -22,6 +21,16 @@ class Timer {
 
   stop() {
     return clearInterval(this.timer);
+  }
+
+  reset() {
+    this.stop();
+    this.currentTime = 0;
+    this.start();1
+  }
+
+  getTime() {
+    return this.currentTime;
   }
 
   getFormattedTime() {

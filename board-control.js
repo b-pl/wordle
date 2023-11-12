@@ -156,17 +156,26 @@ class BoardControl {
     return wordArray;
   }
 
+  // Events on word enter
   enterKeyEvent() {
     if (!this.isRowComplete()) return false;
     this.game.setUserWord(this.createUserWordArray())
 
+    // If game's won
     const isWon = this.game.isWon();    
     if (isWon === true) {
       this.markTilesAndKeys(true);
       return this.gameWon();
     }
-
     this.userInputResults.push(isWon)
+
+    // If game's lost
+    if (this.activeRowId === 6) {
+      console.log('youve lost')
+      return
+    }
+
+    // If game continues
     this.markTilesAndKeys()
     this.setActiveTile(1, true);
 
