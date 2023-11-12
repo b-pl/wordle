@@ -9,11 +9,20 @@
   <script type='module' src="/game.js"></script>
   <script type='module' src="/board-control.js"></script>
   <script type='module' src="/dictionary.js"></script>
+  <script type='module' src="/timer.js"></script>
+  <script type='module' src="/stats.js"></script>
 </head>
 <body class='flex flex-wrap'>
-  <!-- <div class='header flex justify-center border-b-2 border-solid border-black basis-full my-8 px-4 py-8'>
-    <button class='button --howtoplay'>How to play?</button>
-  </div> -->
+  <div class='header flex justify-center border-b-2 border-solid border-black basis-full my-8 px-4 py-8'>
+    <!-- <button class='button --howtoplay'>How to play?</button> -->
+    <button class='button --reset'>Reset</button>
+  </div>
+
+  <div class='container debug flex flex-col gap-2 text-lg md:max-w-3xl px-4'>
+    <div class='debug_timer border-b-2 border-solid border-black py-2'>0:00</div>
+
+    <div class='debug_console border-solid border-black py-2'></div>
+  </div>
 
   <div class='container mx-auto md:max-w-3xl flex flex-col gap-4 px-4 py-4 text-4xl uppercase'>
     <div class='row flex gap-4 justify-center' data-row_id='1' data-is_active='true'>

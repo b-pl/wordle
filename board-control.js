@@ -13,10 +13,8 @@ class BoardControl {
    * @param {bool} increment 
    */
   updateActiveTileId(increment) {
-    // console.log(`updated tile id from ${this.activeTileId}`)
     if (increment) this.activeTileId += 1;
     else this.activeTileId -= 1;
-    // console.log(`to ${this.activeTileId}`)
 
     return
   }
@@ -38,9 +36,6 @@ class BoardControl {
    * @param {array} elements - array of selectors to toggle data-is_active attribute
    */
   toggleActiveAttribute(elements) {
-    // console.group('toggleActiveAttribute')
-    // console.log(tiles)
-    // console.groupEnd('toggleActiveAttribute')
     elements.forEach((element) => {
       if (element.getAttribute('data-is_active') === 'true') element.setAttribute('data-is_active', 'false')
       else element.setAttribute('data-is_active', 'true')
@@ -62,11 +57,6 @@ class BoardControl {
     if (!position) {
       const prevTile = this.activeTileId - 1 !== 0 && isRowActive ? document.querySelector(`[data-tile_id="${this.activeTileId - 1}"]`) : false;
       const tileToClear = activeTile.textContent ? activeTile : (prevTile.parentElement.getAttribute('data-is_active') === 'true' ? prevTile : false );
-      // console.group('setActiveTile')
-      // console.log(`@params: position = ${position}, goToNextRow = ${goToNextRow}`)
-      // console.log(`function consts: activeTile = ${activeTile.getAttribute('data-tile_id')}, isRowActive = ${isRowActive}`)
-      // console.log(`!position consts: prevTile = ${prevTile.getAttribute('data-tile_id')}, tileToClear = ${tileToClear.getAttribute('data-tile_id')}`)
-      // console.groupEnd('setActiveTile')
       if (tileToClear) this.clearTile(tileToClear);
       if (!prevTile) return;
 
@@ -114,10 +104,6 @@ class BoardControl {
   markKeys(letterToMark, typeOfMark) {
     const keyboardKey = document.querySelector(`.keyboard_key[value="${letterToMark.toLowerCase()}"]`);
     const isCorrectPosition = keyboardKey.getAttribute('data-marked') === 'correctPosition' ? true : false;
-    // console.group('markKeys')
-    // console.log(`keyboardKey = ${keyboardKey.getAttribute('value')}`)
-    // console.log(`inCorrectPosition = ${isCorrectPosition}`)
-    // console.groupEnd('markKeys')
 
     if (typeOfMark === 'correctPosition') return keyboardKey.setAttribute('data-marked', 'correctPosition')
     if (typeOfMark === 'inWord' && !isCorrectPosition) return keyboardKey.setAttribute('data-marked', 'inWord')
@@ -166,24 +152,30 @@ class BoardControl {
       }
       wordArray.push(letterObj);
     }
-    console.group(`createUserWordArray`)
-    console.log(`wordArray = ${wordArray}`)
-    console.groupEnd(`createUserWordArray`)
 
     return wordArray;
   }
 
+  // Events on word enter
   enterKeyEvent() {
     if (!this.isRowComplete()) return false;
     this.game.setUserWord(this.createUserWordArray())
 
+    // If game's won
     const isWon = this.game.isWon();    
     if (isWon === true) {
       this.markTilesAndKeys(true);
       return this.gameWon();
     }
-
     this.userInputResults.push(isWon)
+
+    // If game's lost
+    if (this.activeRowId === 6) {
+      console.log('youve lost')
+      return
+    }
+
+    // If game continues
     this.markTilesAndKeys()
     this.setActiveTile(1, true);
 
@@ -224,17 +216,50 @@ class BoardControl {
       // enter
       if (e.code === 'Enter') this.enterKeyEvent()
     })
+  }
 
+  handleClickEvents() {
+    const resetButton = document.querySelector('.--reset');
+
+    resetButton.addEventListener('click', () => { this.resetBoard() })
   }
 
   gameWon = () => {
     return console.log('You\'ve won!')
   }
 
+  resetBoard = () => {
+    // reset stats
+    this.activeTileId = 1;
+    this.activeRowId = 1;
+    this.correctPositions = [];
+    this.inWordPositions = [];
+    this.userInputResults = [];
+
+    // reset front
+    const marked = document.querySelectorAll('[data-marked]');
+    const isActive = document.querySelectorAll('[data-is_active]');
+    const tiles = document.querySelectorAll('.tile')
+
+    marked.forEach((el) => {el.removeAttribute('data-marked')});
+    isActive.forEach((el) => {el.removeAttribute('data-is_active')})
+    tiles.forEach((el) => {el.textContent = ''})
+
+    const firstRow = document.querySelector('[data-row_id="1"]');
+    const firstTile = document.querySelector('[data-tile_id="1"]');
+
+    firstRow.setAttribute('data-is_active', 'true')
+    firstTile.setAttribute('data-is_active', 'true')
+
+    // reset game
+    this.game.resetGame();
+  }
+
   init = (game) => {
     this.game = game;
 
     this.handleKeyboardKeyClick();
+    this.handleClickEvents()
   }
 }
 
