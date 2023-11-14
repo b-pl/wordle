@@ -3,8 +3,6 @@ class BoardControl {
     this.game = undefined;
     this.activeTileId = 1;
     this.activeRowId = 1;
-    this.correctPositions = [];
-    this.inWordPositions = [];
     this.userInputResults = [];
   }
 
@@ -46,40 +44,26 @@ class BoardControl {
 
   /**
    * Sets active tile
-   * Clears tile
-   * @param {bool} position - true -> next / false -> prev
    * @param {bool} goToNextRow 
    */
-  setActiveTile(position, goToNextRow) {
+  setNextTileActive(goToNextRow) {
     const activeTile = document.querySelector(`[data-tile_id="${this.activeTileId}"]`);
-    const isRowActive = activeTile.parentElement.getAttribute('data-is_active') === 'true' ? true : false;
+    const isLastTileInRow = this.activeTileId % 5 === 0 ? true : false;
 
-    if (!position) {
-      const prevTile = this.activeTileId - 1 !== 0 && isRowActive ? document.querySelector(`[data-tile_id="${this.activeTileId - 1}"]`) : false;
-      const tileToClear = activeTile.textContent ? activeTile : (prevTile.parentElement.getAttribute('data-is_active') === 'true' ? prevTile : false );
-      if (tileToClear) this.clearTile(tileToClear);
-      if (!prevTile) return;
-
-      this.toggleActiveAttribute([prevTile, activeTile]);
-      this.updateActiveTileId(0);
-
-      return
-    }
-
-    // set next tile as active
-    if (position && ((this.activeTileId % 5 !== 0 ) || goToNextRow)) {
+    if (!isLastTileInRow || goToNextRow) {
       const nextTile = document.querySelector(`[data-tile_id="${this.activeTileId + 1}"]`);
       this.toggleActiveAttribute([activeTile, nextTile])
       this.updateActiveTileId(1);
-      if (goToNextRow) {
-        const currentRow = document.querySelector(`[data-row_id="${this.activeRowId}"]`);
-        const nextRow = document.querySelector(`[data-row_id="${this.activeRowId + 1}"]`);
-        this.updateActiveRowId();
-        this.toggleActiveAttribute([currentRow, nextRow])
-      }
-
-      return
     }
+
+    if (goToNextRow) {
+      const currentRow = document.querySelector(`[data-row_id="${this.activeRowId}"]`);
+      const nextRow = document.querySelector(`[data-row_id="${this.activeRowId + 1}"]`);
+      this.updateActiveRowId();
+      this.toggleActiveAttribute([currentRow, nextRow])
+    }
+
+    return;
   }
 
   isRowComplete() {
@@ -117,8 +101,7 @@ class BoardControl {
   markTilesAndKeys(isWon) {
     if (isWon) return document.querySelector('.row[data-is_active="true"]').setAttribute('data-iswon', 'true')
 
-    const rowIndexInArray = this.activeRowId - 1;
-    const userInputRowInArray = this.userInputResults[rowIndexInArray];
+    const userInputRowInArray = this.userInputResults[this.activeRowId - 1];
     // console.log(userInputRowInArray)
     const uniqueinWordPositionsRowInArray = userInputRowInArray
       .sort((a, b) => a.type > b.type ? 1 : -1)
@@ -143,7 +126,7 @@ class BoardControl {
   }
 
   createUserWordArray() {
-    const wordArray = []
+    const wordArray = [];
     const wordTiles = document.querySelectorAll(`[data-row_id="${this.activeRowId}"] .tile`);
     for (let el of wordTiles) {
       const letterObj = {
@@ -177,41 +160,57 @@ class BoardControl {
 
     // If game continues
     this.markTilesAndKeys()
-    this.setActiveTile(1, true);
+    this.setNextTileActive(true);
 
     return
   }
 
-  handleKeyboardKeyClick() {
+  backspaceEvent() {
+    const activeTileElement = document.querySelector(`[data-tile_id="${this.activeTileId}"]`);
+    if (this.activeTileId === 1) return this.clearTile(activeTileElement);
+
+    if (activeTileElement.textContent !== '') {
+      this.clearTile(activeTileElement);
+      return;
+    }
+
+    const prevTileElement = document.querySelector(`[data-tile_id="${this.activeTileId - 1}"]`);    
+    if (this.activeRowId == prevTileElement.parentElement.dataset.row_id) {
+      prevTileElement.textContent = '';
+      this.toggleActiveAttribute([prevTileElement, activeTileElement]);
+      this.updateActiveTileId(0);
+      return;
+    }
+  }
+
+  keyEvent(value) {
+    const activeTile = document.querySelector(`[data-tile_id="${this.activeTileId}"]`);
+    if (activeTile.textContent !== '') return false;
+
+    activeTile.textContent = value;
+    this.setNextTileActive();
+
+    return;
+  }
+
+  handleKeyClick() {
     const keys = document.querySelectorAll('.keyboard_key:not(.keyboard_key--special)');
     const backspaceKey = document.querySelector('.keyboard_key.--backspace');
     const enterKey = document.querySelector('.keyboard_key.--enter');
 
     keys.forEach((key) => {
-      key.addEventListener('click', () => {
-        const activeTile = document.querySelector(`[data-tile_id="${this.activeTileId}"]`);
-        if (activeTile.textContent !== '') return false
-
-        activeTile.textContent = key.getAttribute('value');
-        this.setActiveTile(1);
-      })
+      key.addEventListener('click', () => this.keyEvent(key.getAttribute('value')));
     })
-    backspaceKey.addEventListener('click', () => this.setActiveTile(0));
+    backspaceKey.addEventListener('click', () => this.backspaceEvent());
     enterKey.addEventListener('click', () => this.enterKeyEvent())
 
     // physical keyboard events
     window.addEventListener('keydown', (e) => {
       // letters
-      if (e.code.includes('Key')) {
-        const activeTile = document.querySelector(`[data-tile_id="${this.activeTileId}"]`);
-        if (activeTile.textContent !== '') return false
-
-        activeTile.textContent = e.key
-        this.setActiveTile(1);
-      }
+      if (e.code.includes('Key')) this.keyEvent(e.key);
 
       // backspace
-      if (e.code === 'Backspace') this.setActiveTile(0)
+      if (e.code === 'Backspace') this.backspaceEvent();
 
       // enter
       if (e.code === 'Enter') this.enterKeyEvent()
@@ -232,8 +231,6 @@ class BoardControl {
     // reset stats
     this.activeTileId = 1;
     this.activeRowId = 1;
-    this.correctPositions = [];
-    this.inWordPositions = [];
     this.userInputResults = [];
 
     // reset front
@@ -258,7 +255,7 @@ class BoardControl {
   init = (game) => {
     this.game = game;
 
-    this.handleKeyboardKeyClick();
+    this.handleKeyClick();
     this.handleClickEvents()
   }
 }

@@ -9,7 +9,6 @@ class Game {
     this.userWord = ''
     this.stats = new Stats();
     this.timesGuessed = 0;
-
     // run timer
     this.stats.timer.start();
   }
