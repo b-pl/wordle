@@ -91,6 +91,7 @@ class BoardControl {
 
     if (typeOfMark === 'correctPosition') return keyboardKey.setAttribute('data-marked', 'correctPosition')
     if (typeOfMark === 'inWord' && !isCorrectPosition) return keyboardKey.setAttribute('data-marked', 'inWord')
+    if (typeOfMark !== 'correctPosition' && typeOfMark !== 'inWord') return keyboardKey.setAttribute('data-marked', 'notInWord')
   }
 
   /**
@@ -103,7 +104,7 @@ class BoardControl {
 
     const userInputRowInArray = this.userInputResults[this.activeRowId - 1];
     // console.log(userInputRowInArray)
-    const uniqueinWordPositionsRowInArray = userInputRowInArray
+    const uniqueInWordPositionsRowInArray = userInputRowInArray
       .sort((a, b) => a.type > b.type ? 1 : -1)
       .reduce((accumulator, current) => {
         if (!accumulator.find((item) => item.letter === current.letter)) {
@@ -112,7 +113,7 @@ class BoardControl {
         return accumulator;
       }, []);
 
-    for (let el of uniqueinWordPositionsRowInArray) {
+    for (let el of uniqueInWordPositionsRowInArray) {
       if (el.type === 'correctPosition') {
         document.querySelector(`[data-tile_id="${el.id}"]`).setAttribute('data-marked', 'correctPosition');
 
@@ -123,6 +124,15 @@ class BoardControl {
         this.markKeys(el.letter, 'inWord')
       }
     }
+
+    const leftLetters = document.querySelectorAll(`[data-row_id="${this.activeRowId}"] .tile:not([data-marked])`);
+    for (let el of leftLetters) {
+      const letterValue = el.textContent;
+      this.markKeys(letterValue);
+      el.setAttribute('data-marked', 'notInWord')
+    }
+
+    return
   }
 
   createUserWordArray() {
@@ -217,10 +227,37 @@ class BoardControl {
     })
   }
 
+  statsOpenEvent() {
+    const statsModal = document.querySelector('#stats');
+    if (!statsModal) return false;
+
+    statsModal.showModal();
+
+    const stats = this.game.stats.getStats();
+    for (let [key, value] of Object.entries(stats)){
+      if (document.querySelector(`.--${key}`)) {
+          document.querySelector(`.--${key} .item_value`).textContent = value;
+      }
+    };
+
+    return;
+  }
+
+  statsCloseEvent() {
+    const statsModal = document.querySelector('#stats');
+    if (!statsModal) return false;
+
+    statsModal.close();
+  }
+
   handleClickEvents() {
     const resetButton = document.querySelector('.--reset');
+    const statsButton = document.querySelector('.--stats');
+    const closeStatsButton = document.querySelector('.close_button');
 
-    resetButton.addEventListener('click', () => { this.resetBoard() })
+    resetButton.addEventListener('click', () => this.resetBoard());
+    statsButton.addEventListener('click', () => this.statsOpenEvent());
+    closeStatsButton.addEventListener('click', () => this.statsCloseEvent());
   }
 
   gameWon = () => {
@@ -241,6 +278,9 @@ class BoardControl {
     marked.forEach((el) => {el.removeAttribute('data-marked')});
     isActive.forEach((el) => {el.removeAttribute('data-is_active')})
     tiles.forEach((el) => {el.textContent = ''})
+
+    const wonRow = document.querySelector('[data-iswon]');
+    if (wonRow) wonRow.removeAttribute('data-iswon');
 
     const firstRow = document.querySelector('[data-row_id="1"]');
     const firstTile = document.querySelector('[data-tile_id="1"]');

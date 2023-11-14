@@ -10,6 +10,10 @@
   background: lightblue;
 }
 
+[data-marked="notInWord"] {
+  background: lightgray;
+}
+
 [data-iswon=true] > * {
   background: lightgreen;
 }

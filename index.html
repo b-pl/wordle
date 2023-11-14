@@ -13,9 +13,9 @@
   <script type='module' src="/stats.js"></script>
 </head>
 <body class='flex flex-wrap'>
-  <div class='header flex justify-center border-b-2 border-solid border-black basis-full my-8 px-4 py-8'>
-    <!-- <button class='button --howtoplay'>How to play?</button> -->
-    <button class='button --reset'>Reset</button>
+  <div class='header flex justify-center gap-4 border-b-2 border-solid border-black basis-full my-8 px-4 py-8'>
+    <button class='button --reset p-2 border border-solid border-black'>Reset</button>
+    <button class='button --stats p-2 border border-solid border-black'>Stats</button>
   </div>
 
   <div class='container debug flex flex-col gap-2 text-lg md:max-w-3xl px-4'>
@@ -117,10 +117,28 @@
     </div>
   </div>
 
-  <!-- <dialog id='how_to_play'>
-    <div class='how_to_play'>
-      
+  <dialog id='stats' class='w-1/4'>
+    <div class='stats w-full flex flex-col gap-4 px-4 py-4'>
+      <div class='stats_close text-right'><span class='close_button text-2xl cursor-pointer'>X</span></div>
+      <div class='stats_headline text-center text-5xl font-bold mb-6'>Statystyki</div>
+      <div class='stats_items flex flex-col py-2 text-xl font-bold'>
+        <div class='item --lowTime flex gap-4 py-2'><span class='item_key flex-initial'>Najlepszy czas:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --highTime flex gap-4 py-2 bg-slate-200'><span class='item_key flex-initial'>Najgorszy czas:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --timesPlayed flex gap-4 py-2'><span class='item_key flex-initial'>Rozgrywek:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --timesWon flex gap-4 py-2 bg-slate-200'><span class='item_key flex-initial'>Zwyciężonych:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --timesLost flex gap-4 py-2'><span class='item_key flex-initial'>Przegranych:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --currentWinStreak flex gap-4 py-2 bg-slate-200'><span class='item_key flex-initial'>Passa wygranych:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --highestWinStreak flex gap-4 py-2'><span class='item_key flex-initial'>Najdłuższa passa wygranych:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --guessDistribution py-2'>
+          <div class='guess1'><span></span></div>
+          <div class='guess2'><span></span></div>
+          <div class='guess3'><span></span></div>
+          <div class='guess4'><span></span></div>
+          <div class='guess5'><span></span></div>
+          <div class='guess6'><span></span></div>
+        </div>
+      </div>
     </div>
-  </dialog> -->
+  </dialog>
 </body>
 </html>

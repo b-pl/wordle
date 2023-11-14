@@ -3,7 +3,7 @@ import Timer from './timer.js'
 const stats = {
   currentTime: 0,
   lowTime: 0,
-  hightTime: 0,
+  highTime: 0,
   timesPlayed: 0,
   timesWon: 0,
   timesLost: 0,
