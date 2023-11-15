@@ -17,3 +17,35 @@
 [data-iswon=true] > * {
   background: lightgreen;
 }
+
+.switch { 
+  position : relative ;
+  display : inline-block;
+  width : 80px;
+  height : 100%;
+  background-color: #eee;
+  border-radius: 20px;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  width: 33px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: white;
+  top: 3px;
+  left: 2px;
+  transition: all 0.3s;
+}
+
+.checkbox:checked + .switch::after {
+  left : 44px; 
+}
+.checkbox:checked + .switch {
+  background-color: #7983ff;
+}
+
+.checkbox { 
+  display : none;
+}

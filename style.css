@@ -685,12 +685,12 @@ video {
   margin-bottom: 2rem;
 }
 
-.mt-2 {
-  margin-top: 0.5rem;
-}
-
 .mb-6 {
   margin-bottom: 1.5rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
 }
 
 .box-border {
@@ -810,14 +810,6 @@ video {
 
 .w-full {
   width: 100%;
-}
-
-.flex-auto {
-  flex: 1 1 auto;
-}
-
-.flex-1 {
-  flex: 1 1 0%;
 }
 
 .flex-initial {
@@ -1790,11 +1782,6 @@ video {
   background-color: rgb(255 0 0 / var(--tw-bg-opacity));
 }
 
-.bg-slate-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
-}
-
 .bg-slate-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(226 232 240 / var(--tw-bg-opacity));
@@ -1999,9 +1986,19 @@ video {
   vertical-align: super;
 }
 
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .text-lg {
@@ -2009,19 +2006,9 @@ video {
   line-height: 1.75rem;
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
-}
-
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
 }
 
 .font-bold {
@@ -2438,6 +2425,39 @@ video {
   background: lightgreen;
 }
 
+.switch {
+  position : relative ;
+  display : inline-block;
+  width : 80px;
+  height : 100%;
+  background-color: #eee;
+  border-radius: 20px;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  width: 33px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: white;
+  top: 3px;
+  left: 2px;
+  transition: all 0.3s;
+}
+
+.checkbox:checked + .switch::after {
+  left : 44px;
+}
+
+.checkbox:checked + .switch {
+  background-color: #7983ff;
+}
+
+.checkbox {
+  display : none;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -2508,10 +2528,8 @@ video {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  @media (min-width: 1024px) {
-    .dark\:lg\:hover\:\[paint-order\:markers\]:hover {
-      paint-order: markers;
-    }
+@media (min-width: 1024px) {
+  :is(.dark .dark\:lg\:hover\:\[paint-order\:markers\]:hover) {
+    paint-order: markers;
   }
 }

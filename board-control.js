@@ -4,6 +4,7 @@ class BoardControl {
     this.activeTileId = 1;
     this.activeRowId = 1;
     this.userInputResults = [];
+    this.keyboardBlocked = false;
   }
 
   /**
@@ -151,6 +152,8 @@ class BoardControl {
 
   // Events on word enter
   enterKeyEvent() {
+    if (this.keyboardBlocked) return false;
+    
     if (!this.isRowComplete()) return false;
     this.game.setUserWord(this.createUserWordArray())
 
@@ -176,6 +179,8 @@ class BoardControl {
   }
 
   backspaceEvent() {
+    if (this.keyboardBlocked) return false;
+
     const activeTileElement = document.querySelector(`[data-tile_id="${this.activeTileId}"]`);
     if (this.activeTileId === 1) return this.clearTile(activeTileElement);
 
@@ -194,6 +199,8 @@ class BoardControl {
   }
 
   keyEvent(value) {
+    if (this.keyboardBlocked) return false;
+
     const activeTile = document.querySelector(`[data-tile_id="${this.activeTileId}"]`);
     if (activeTile.textContent !== '') return false;
 
@@ -230,6 +237,7 @@ class BoardControl {
   statsOpenEvent() {
     const statsModal = document.querySelector('#stats');
     if (!statsModal) return false;
+    this.keyboardBlocked = true;
 
     statsModal.showModal();
 
@@ -244,20 +252,34 @@ class BoardControl {
   }
 
   statsCloseEvent() {
+    this.keyboardBlocked = false;
     const statsModal = document.querySelector('#stats');
     if (!statsModal) return false;
 
     statsModal.close();
   }
 
-  handleClickEvents() {
+  toggleThemeEvent() {
+    const toggleCheckbox = document.querySelector('#toggle_theme');
+    toggleCheckbox.checked = !toggleCheckbox.checked;
+
+    document.querySelector('html').classList.toggle('dark');
+
+    return;
+  }
+
+  handleEvents() {
     const resetButton = document.querySelector('.--reset');
     const statsButton = document.querySelector('.--stats');
     const closeStatsButton = document.querySelector('.close_button');
+    const statsModal = document.querySelector('#stats');
+    const themeSwitch = document.querySelector('.theme_switch')
 
     resetButton.addEventListener('click', () => this.resetBoard());
     statsButton.addEventListener('click', () => this.statsOpenEvent());
     closeStatsButton.addEventListener('click', () => this.statsCloseEvent());
+    statsModal.addEventListener('close', () => this.statsCloseEvent());
+    themeSwitch.addEventListener('click', () => this.toggleThemeEvent());
   }
 
   gameWon = () => {
@@ -296,7 +318,7 @@ class BoardControl {
     this.game = game;
 
     this.handleKeyClick();
-    this.handleClickEvents()
+    this.handleEvents()
   }
 }
 
