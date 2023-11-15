@@ -92,7 +92,7 @@ class BoardControl {
 
     if (typeOfMark === 'correctPosition') return keyboardKey.setAttribute('data-marked', 'correctPosition')
     if (typeOfMark === 'inWord' && !isCorrectPosition) return keyboardKey.setAttribute('data-marked', 'inWord')
-    if (typeOfMark !== 'correctPosition' && typeOfMark !== 'inWord') return keyboardKey.setAttribute('data-marked', 'notInWord')
+    if (typeOfMark !== 'correctPosition' && typeOfMark !== 'inWord' && !keyboardKey.hasAttribute('data-marked')) return keyboardKey.setAttribute('data-marked', 'notInWord')
   }
 
   /**
