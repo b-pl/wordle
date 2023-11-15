@@ -108,6 +108,10 @@ class Game {
   _getWord() {
     return this.answerWord
   }
+
+  _setAnswer(word) {
+    return this.answerWord = word;
+  }
 }
 
   export default Game
