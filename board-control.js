@@ -4,6 +4,7 @@ class BoardControl {
     this.activeTileId = 1;
     this.activeRowId = 1;
     this.userInputResults = [];
+    this.keyboardBlocked = false;
   }
 
   /**
@@ -91,6 +92,7 @@ class BoardControl {
 
     if (typeOfMark === 'correctPosition') return keyboardKey.setAttribute('data-marked', 'correctPosition')
     if (typeOfMark === 'inWord' && !isCorrectPosition) return keyboardKey.setAttribute('data-marked', 'inWord')
+    if (typeOfMark !== 'correctPosition' && typeOfMark !== 'inWord') return keyboardKey.setAttribute('data-marked', 'notInWord')
   }
 
   /**
@@ -103,7 +105,7 @@ class BoardControl {
 
     const userInputRowInArray = this.userInputResults[this.activeRowId - 1];
     // console.log(userInputRowInArray)
-    const uniqueinWordPositionsRowInArray = userInputRowInArray
+    const uniqueInWordPositionsRowInArray = userInputRowInArray
       .sort((a, b) => a.type > b.type ? 1 : -1)
       .reduce((accumulator, current) => {
         if (!accumulator.find((item) => item.letter === current.letter)) {
@@ -112,7 +114,7 @@ class BoardControl {
         return accumulator;
       }, []);
 
-    for (let el of uniqueinWordPositionsRowInArray) {
+    for (let el of uniqueInWordPositionsRowInArray) {
       if (el.type === 'correctPosition') {
         document.querySelector(`[data-tile_id="${el.id}"]`).setAttribute('data-marked', 'correctPosition');
 
@@ -123,6 +125,15 @@ class BoardControl {
         this.markKeys(el.letter, 'inWord')
       }
     }
+
+    const leftLetters = document.querySelectorAll(`[data-row_id="${this.activeRowId}"] .tile:not([data-marked])`);
+    for (let el of leftLetters) {
+      const letterValue = el.textContent;
+      this.markKeys(letterValue);
+      el.setAttribute('data-marked', 'notInWord')
+    }
+
+    return
   }
 
   createUserWordArray() {
@@ -141,6 +152,8 @@ class BoardControl {
 
   // Events on word enter
   enterKeyEvent() {
+    if (this.keyboardBlocked) return false;
+    
     if (!this.isRowComplete()) return false;
     this.game.setUserWord(this.createUserWordArray())
 
@@ -166,6 +179,8 @@ class BoardControl {
   }
 
   backspaceEvent() {
+    if (this.keyboardBlocked) return false;
+
     const activeTileElement = document.querySelector(`[data-tile_id="${this.activeTileId}"]`);
     if (this.activeTileId === 1) return this.clearTile(activeTileElement);
 
@@ -184,6 +199,8 @@ class BoardControl {
   }
 
   keyEvent(value) {
+    if (this.keyboardBlocked) return false;
+
     const activeTile = document.querySelector(`[data-tile_id="${this.activeTileId}"]`);
     if (activeTile.textContent !== '') return false;
 
@@ -217,10 +234,52 @@ class BoardControl {
     })
   }
 
-  handleClickEvents() {
-    const resetButton = document.querySelector('.--reset');
+  statsOpenEvent() {
+    const statsModal = document.querySelector('#stats');
+    if (!statsModal) return false;
+    this.keyboardBlocked = true;
 
-    resetButton.addEventListener('click', () => { this.resetBoard() })
+    statsModal.showModal();
+
+    const stats = this.game.stats.getStats();
+    for (let [key, value] of Object.entries(stats)){
+      if (document.querySelector(`.--${key}`)) {
+          document.querySelector(`.--${key} .item_value`).textContent = value;
+      }
+    };
+
+    return;
+  }
+
+  statsCloseEvent() {
+    this.keyboardBlocked = false;
+    const statsModal = document.querySelector('#stats');
+    if (!statsModal) return false;
+
+    statsModal.close();
+  }
+
+  toggleThemeEvent() {
+    const toggleCheckbox = document.querySelector('#toggle_theme');
+    toggleCheckbox.checked = !toggleCheckbox.checked;
+
+    document.querySelector('html').classList.toggle('dark');
+
+    return;
+  }
+
+  handleEvents() {
+    const resetButton = document.querySelector('.--reset');
+    const statsButton = document.querySelector('.--stats');
+    const closeStatsButton = document.querySelector('.close_button');
+    const statsModal = document.querySelector('#stats');
+    const themeSwitch = document.querySelector('.theme_switch')
+
+    resetButton.addEventListener('click', () => this.resetBoard());
+    statsButton.addEventListener('click', () => this.statsOpenEvent());
+    closeStatsButton.addEventListener('click', () => this.statsCloseEvent());
+    statsModal.addEventListener('close', () => this.statsCloseEvent());
+    themeSwitch.addEventListener('click', () => this.toggleThemeEvent());
   }
 
   gameWon = () => {
@@ -242,6 +301,9 @@ class BoardControl {
     isActive.forEach((el) => {el.removeAttribute('data-is_active')})
     tiles.forEach((el) => {el.textContent = ''})
 
+    const wonRow = document.querySelector('[data-iswon]');
+    if (wonRow) wonRow.removeAttribute('data-iswon');
+
     const firstRow = document.querySelector('[data-row_id="1"]');
     const firstTile = document.querySelector('[data-tile_id="1"]');
 
@@ -256,7 +318,7 @@ class BoardControl {
     this.game = game;
 
     this.handleKeyClick();
-    this.handleClickEvents()
+    this.handleEvents()
   }
 }
 
