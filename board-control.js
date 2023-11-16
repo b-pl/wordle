@@ -167,8 +167,7 @@ class BoardControl {
 
     // If game's lost
     if (this.activeRowId === 6) {
-      console.log('youve lost')
-      return
+      return this.gameLost();
     }
 
     // If game continues
@@ -244,7 +243,9 @@ class BoardControl {
     const stats = this.game.stats.getStats();
     for (let [key, value] of Object.entries(stats)){
       if (document.querySelector(`.--${key}`)) {
-          document.querySelector(`.--${key} .item_value`).textContent = value;
+          document.querySelector(`.--${key} .item_value`).textContent = (key === 'lowTime' || key === 'highTime') ?
+                                                                        this.game.stats.timer.getFormattedTime(value) :
+                                                                        value;
       }
     };
 
@@ -282,8 +283,21 @@ class BoardControl {
     themeSwitch.addEventListener('click', () => this.toggleThemeEvent());
   }
 
-  gameWon = () => {
-    return console.log('You\'ve won!')
+  gameWon() {
+    this.statsOpenEvent();
+    document.querySelector('#won_headline').classList.remove('hidden');
+    document.querySelector('.--word').textContent = this.game.answerWord.join('');
+
+    return;
+  }
+
+  gameLost() {
+    this.statsOpenEvent();
+    document.querySelector('#lost_headline').classList.remove('hidden');
+    document.querySelector('.--word').classList.remove('hidden');
+    document.querySelector('.--word').textContent = this.game.answerWord.join('');
+
+    return;
   }
 
   resetBoard = () => {
@@ -309,6 +323,10 @@ class BoardControl {
 
     firstRow.setAttribute('data-is_active', 'true')
     firstTile.setAttribute('data-is_active', 'true')
+
+    // reset stats modal
+    document.querySelectorAll('.endgame_headline').forEach((el) => el.classList.add('hidden'));
+    document.querySelector('.--word').textContent = '';
 
     // reset game
     this.game.resetGame();
