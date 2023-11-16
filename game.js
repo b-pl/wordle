@@ -63,7 +63,7 @@ class Game {
     this.userWord = '';
     this.stats.setStats({
       timesLost: this.stats.stats.timesLost + 1,
-      currentWinStreak: 0
+      currentWinStreak: 0,
     }, true);
     this.stats.timer.reset();
 
@@ -71,15 +71,17 @@ class Game {
   }
 
   updateStatsGameWon() {
-    console.log('updateStatsGameWon')
+    this.stats.timer.stop();
+
     const updatesStats = {
+      timesPlayed: this.stats.stats.timesPlayed + 1,
       lowTime: this.stats.stats.lowTime === 0 ?
-               this.stats.stats.currentTime : 
-               (this.stats.stats.currentTime < this.stats.stats.lowTime ? this.stats.stats.currentTime : this.stats.stats.lowTime),
+               this.stats.timer.currentTime : 
+               (this.stats.timer.currentTime < this.stats.stats.lowTime ? this.stats.timer.currentTime : this.stats.stats.lowTime),
 
       highTime: this.stats.stats.highTime === 0 ?
-                this.stats.stats.currentTime :
-                (this.stats.stats.currentTime > this.stats.stats.highTime ? this.stats.stats.currentTime : this.stats.stats.highTime),
+                this.stats.timer.currentTime :
+                (this.stats.timer.currentTime > this.stats.stats.highTime ? this.stats.timer.currentTime : this.stats.stats.highTime),
 
       timesWon: this.stats.stats.timesWon + 1,
       currentWinStreak: this.stats.stats.currentWinStreak + 1,
@@ -87,17 +89,18 @@ class Game {
                         this.stats.stats.currentWinStreak + 1 :
                         this.stats.stats.highestWinStreak,
 
-      [`guess${this.timesGuessed}`]: this.stats.stats[`guess${this.timesGuessed}`] + 1
+      [`guess${this.timesGuessed}`]: this.stats.stats[`guess${this.timesGuessed}`] + 1,
     }
 
     return this.stats.setStats({...updatesStats}, true);
   }
 
   updateStatsGameLost() {
-    console.log('updateStatsGameLost')
+    this.stats.timer.stop();
     const updatedStats = {
+      timesPlayed: this.stats.stats.timesPlayed + 1,
       timesLost: this.stats.stats.timesLost + 1,
-      currentWinStreak: 0,
+      currentWinStreak: 0
     }
 
     return this.stats.setStats({...updatedStats});

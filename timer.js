@@ -26,19 +26,21 @@ class Timer {
   reset() {
     this.stop();
     this.currentTime = 0;
-    this.start();1
+    this.start();
   }
 
   getTime() {
     return this.currentTime;
   }
 
-  getFormattedTime() {
-    if (this.currentTime < 10) return `0:0${this.currentTime}`;
-    if (this.currentTime > 10 && this.currentTime < 60) return `0:${this.currentTime}`;
+  getFormattedTime(timeToFormat) {
+    const time = timeToFormat ? timeToFormat : this.currentTime
+
+    if (time < 10) return `0:0${time}`;
+    if (time > 10 && time < 60) return `0:${time}`;
   
-    const minutes = Math.floor(this.currentTime / 60);
-    const seconds = this.currentTime - minutes * 60;
+    const minutes = Math.floor(time / 60);
+    const seconds = time - minutes * 60;
     const secondsFormatted = seconds < 10 ? `0${seconds}` : `${seconds}`;
   
     return `${minutes}:${secondsFormatted}`;
