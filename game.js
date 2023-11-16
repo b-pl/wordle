@@ -5,12 +5,13 @@ class Game {
   constructor() {
     // pobieranie danych z localStorage w przypadku niedokończonej gry
     this.localDictionary = Dictionary
-    this.answerWord = this.drawWord().toUpperCase().split('')
+    this.answerWord = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).answer : this.drawWord().toUpperCase().split('');
     this.userWord = ''
     this.stats = new Stats();
-    this.timesGuessed = 0;
+    this.timesGuessed = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).timesGuessed : 0;
     // run timer
-    this.stats.timer.start();
+    localStorage.getItem('data') ? this.stats.timer.start(JSON.parse(localStorage.getItem('data')).time) : this.stats.timer.start();
+    this.gameWon = false;
   }
 
   // returns random int from 0 to max
@@ -48,6 +49,7 @@ class Game {
         return acc;
     }, 0) === 5 ? true : res
 
+    // console.log(isWon)
     // If game's won
     if (isWon === true) this.updateStatsGameWon();
 
@@ -65,6 +67,7 @@ class Game {
       timesLost: this.stats.stats.timesLost + 1,
       currentWinStreak: 0,
     }, true);
+    this.timesGuessed = 0;
     this.stats.timer.reset();
 
     return;
@@ -72,6 +75,7 @@ class Game {
 
   updateStatsGameWon() {
     this.stats.timer.stop();
+    this.gameWon = true;
 
     const updatesStats = {
       timesPlayed: this.stats.stats.timesPlayed + 1,

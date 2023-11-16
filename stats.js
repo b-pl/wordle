@@ -49,7 +49,7 @@ class Stats {
 
     if (updateLocalStorage) this.setLocalStorage();
 
-    this._consoleStats();
+    // this._consoleStats();
 
     return
   }
