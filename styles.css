@@ -39,6 +39,23 @@
   transition: all 0.3s;
 }
 
+.theme_switch::before {
+  content: url('/moon.svg');
+  position: absolute;
+  top: 9px;
+  right: 8px;
+  transform: rotateY(180deg);
+  z-index: 100;
+}
+
+.theme_switch::after {
+  content: url('/sun.svg');
+  position: absolute;
+  top: 9px;
+  left: 7px;
+  z-index: 100;
+}
+
 .checkbox:checked + .switch::after {
   left : 44px; 
 }
