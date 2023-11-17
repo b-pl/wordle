@@ -1,10 +1,12 @@
 class BoardControl {
   constructor() {
     this.game = undefined;
-    this.activeTileId = 1;
-    this.activeRowId = 1;
-    this.userInputResults = [];
+    this.activeTileId = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).activeTile : 1;
+    this.activeRowId = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).activeRow : 1;
+    this.userInputResults = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).userInputResults : [];
     this.keyboardBlocked = false;
+
+    if (localStorage.getItem('data')) this.loadData();
   }
 
   /**
@@ -287,6 +289,7 @@ class BoardControl {
     this.statsOpenEvent();
     document.querySelector('#won_headline').classList.remove('hidden');
     document.querySelector('.--word').textContent = this.game.answerWord.join('');
+    this.removeData()
 
     return;
   }
@@ -296,6 +299,7 @@ class BoardControl {
     document.querySelector('#lost_headline').classList.remove('hidden');
     document.querySelector('.--word').classList.remove('hidden');
     document.querySelector('.--word').textContent = this.game.answerWord.join('');
+    this.removeData()
 
     return;
   }
@@ -330,13 +334,86 @@ class BoardControl {
 
     // reset game
     this.game.resetGame();
+    this.removeData();
+
+    return;
+  }
+
+  saveData() {
+    if (this.game.timesGuessed === 6 || this.game.gameWon === true) return false;
+    // tiles data
+    const tiles = document.querySelectorAll('.tile');
+    const tilesArr = [];
+    tiles.forEach((tile) => {
+      if (tile.textContent !== '') {
+        const obj = {
+          tileId: tile.dataset.tile_id,
+          marked: tile.dataset.marked,
+          value: tile.textContent
+        }
+  
+        tilesArr.push(obj)
+      }
+    });
+  
+    // keyboard data
+    const keys = document.querySelectorAll('.keyboard_key');
+    const keysArr = [];
+    keys.forEach((key) => {
+      if (key.dataset.marked) {
+        const obj = {
+          value: key.getAttribute('value'),
+          marked: key.dataset.marked
+        }
+  
+        keysArr.push(obj)
+      }
+    });
+
+    const data = {
+      tiles: tilesArr,
+      keys: keysArr,
+      answer: this.game.answerWord,
+      time: this.game.stats.timer.currentTime,
+      timesGuessed: this.game.timesGuessed,
+      activeRow: this.activeRowId,
+      activeTile: this.activeTileId,
+      userInputResults: this.userInputResults
+    }
+
+    return localStorage.setItem('data', JSON.stringify(data));
+  }
+
+  loadData() {
+    const data = JSON.parse(localStorage.getItem('data'));
+    const tiles = data.tiles;
+    const keys = data.keys;
+  
+    tiles.forEach((el) => {
+      const tile = document.querySelector(`.tile[data-tile_id="${el.tileId}"]`);
+      tile.textContent = el.value.toUpperCase();
+      tile.dataset.marked = el.marked ? el.marked : '';
+    })
+  
+    keys.forEach((el) => {
+      const key = document.querySelector(`.keyboard_key[value="${el.value}"]`)
+      key.dataset.marked = el.marked
+    })
+
+    return
+  }
+
+  removeData() {
+    return localStorage.getItem('data') ? localStorage.removeItem('data') : '';
   }
 
   init = (game) => {
     this.game = game;
 
     this.handleKeyClick();
-    this.handleEvents()
+    this.handleEvents();
+
+    window.addEventListener('beforeunload', () => this.saveData());
   }
 }
 

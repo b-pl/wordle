@@ -5,12 +5,13 @@ class Game {
   constructor() {
     // pobieranie danych z localStorage w przypadku niedokończonej gry
     this.localDictionary = Dictionary
-    this.answerWord = this.drawWord().toUpperCase().split('')
+    this.answerWord = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).answer : this.drawWord().toUpperCase().split('');
     this.userWord = ''
     this.stats = new Stats();
-    this.timesGuessed = 0;
+    this.timesGuessed = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).timesGuessed : 0;
     // run timer
-    this.stats.timer.start();
+    localStorage.getItem('data') ? this.stats.timer.start(JSON.parse(localStorage.getItem('data')).time) : this.stats.timer.start();
+    this.gameWon = false;
   }
 
   // returns random int from 0 to max
@@ -20,12 +21,18 @@ class Game {
 
   // picks one word from dictionary and sets it as Answer
   drawWord() {
-    return this.localDictionary[this.getRandomInt(this.localDictionary.length)]
+    const guessed = localStorage.getItem('guessed') ? JSON.parse(localStorage.getItem('guessed')) : [];
+    let word = ''
+    do {
+      word = this.localDictionary[this.getRandomInt(this.localDictionary.length)]
+    } while (guessed.some((el) => el.toUpperCase() === word.toUpperCase()))
+
+    return word
   }
 
   // get User word and save it to variables
   setUserWord(word) {
-    this.userWord = word
+    return this.userWord = word
   }
 
   /**
@@ -49,7 +56,10 @@ class Game {
     }, 0) === 5 ? true : res
 
     // If game's won
-    if (isWon === true) this.updateStatsGameWon();
+    if (isWon === true) {
+      this.updateGuessedWords();
+      this.updateStatsGameWon();
+    }
 
     // If game's lost
     if (this.timesGuessed === 6) this.updateStatsGameLost();
@@ -65,6 +75,7 @@ class Game {
       timesLost: this.stats.stats.timesLost + 1,
       currentWinStreak: 0,
     }, true);
+    this.timesGuessed = 0;
     this.stats.timer.reset();
 
     return;
@@ -72,6 +83,7 @@ class Game {
 
   updateStatsGameWon() {
     this.stats.timer.stop();
+    this.gameWon = true;
 
     const updatesStats = {
       timesPlayed: this.stats.stats.timesPlayed + 1,
@@ -104,6 +116,13 @@ class Game {
     }
 
     return this.stats.setStats({...updatedStats});
+  }
+
+  updateGuessedWords() {
+    const guessedArray = localStorage.getItem('guessed') ? JSON.parse(localStorage.getItem('guessed')) : []
+    guessedArray.push(this.answerWord.join(''));
+
+    return localStorage.setItem('guessed', JSON.stringify(guessedArray))
   }
 
   // DEBUG

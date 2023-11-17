@@ -34,7 +34,7 @@ class Timer {
   }
 
   getFormattedTime(timeToFormat) {
-    const time = timeToFormat ? timeToFormat : this.currentTime
+    const time = (timeToFormat !== undefined) ? timeToFormat : this.currentTime
 
     if (time < 10) return `0:0${time}`;
     if (time > 10 && time < 60) return `0:${time}`;
