@@ -21,12 +21,18 @@ class Game {
 
   // picks one word from dictionary and sets it as Answer
   drawWord() {
-    return this.localDictionary[this.getRandomInt(this.localDictionary.length)]
+    const guessed = localStorage.getItem('guessed') ? JSON.parse(localStorage.getItem('guessed')) : [];
+    let word = ''
+    do {
+      word = this.localDictionary[this.getRandomInt(this.localDictionary.length)]
+    } while (guessed.some((el) => el.toUpperCase() === word.toUpperCase()))
+
+    return word
   }
 
   // get User word and save it to variables
   setUserWord(word) {
-    this.userWord = word
+    return this.userWord = word
   }
 
   /**
@@ -49,9 +55,11 @@ class Game {
         return acc;
     }, 0) === 5 ? true : res
 
-    // console.log(isWon)
     // If game's won
-    if (isWon === true) this.updateStatsGameWon();
+    if (isWon === true) {
+      this.updateGuessedWords();
+      this.updateStatsGameWon();
+    }
 
     // If game's lost
     if (this.timesGuessed === 6) this.updateStatsGameLost();
@@ -108,6 +116,13 @@ class Game {
     }
 
     return this.stats.setStats({...updatedStats});
+  }
+
+  updateGuessedWords() {
+    const guessedArray = localStorage.getItem('guessed') ? JSON.parse(localStorage.getItem('guessed')) : []
+    guessedArray.push(this.answerWord.join(''));
+
+    return localStorage.setItem('guessed', JSON.stringify(guessedArray))
   }
 
   // DEBUG

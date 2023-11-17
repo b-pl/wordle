@@ -8,13 +8,7 @@ const stats = {
   timesWon: 0,
   timesLost: 0,
   currentWinStreak: 0,
-  highestWinStreak: 0,
-  guess1: 0,
-  guess2: 0,
-  guess3: 0,
-  guess4: 0,
-  guess5: 0,
-  guess6: 0
+  highestWinStreak: 0
 }
 
 class Stats {
