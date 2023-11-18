@@ -7,6 +7,7 @@ class BoardControl {
     this.keyboardBlocked = false;
 
     if (localStorage.getItem('data')) this.loadData();
+    if (localStorage.getItem('darkmode') && localStorage.getItem('darkmode') === 'true') this.setThemeOnLoad();
   }
 
   /**
@@ -251,6 +252,10 @@ class BoardControl {
       }
     };
 
+    document.querySelector('.--progress .item_value').textContent = `${localStorage.getItem('guessed')
+                                                                    ? JSON.parse(localStorage.getItem('guessed')).length
+                                                                    : 0} / ${this.game.localDictionary.length}`
+
     return;
   }
 
@@ -267,6 +272,7 @@ class BoardControl {
     toggleCheckbox.checked = !toggleCheckbox.checked;
 
     document.querySelector('html').classList.toggle('dark');
+    localStorage.setItem('darkmode', toggleCheckbox.checked)
 
     return;
   }
@@ -331,6 +337,7 @@ class BoardControl {
     // reset stats modal
     document.querySelectorAll('.endgame_headline').forEach((el) => el.classList.add('hidden'));
     document.querySelector('.--word').textContent = '';
+    document.querySelector('.--word').classList.add('hidden')
 
     // reset game
     this.game.resetGame();
@@ -340,7 +347,7 @@ class BoardControl {
   }
 
   saveData() {
-    if (this.game.timesGuessed === 6 || this.game.gameWon === true) return false;
+    if (this.game.timesGuessed === 6 || this.game.timesGuessed === 0 || this.game.gameWon === true) return false;
     // tiles data
     const tiles = document.querySelectorAll('.tile');
     const tilesArr = [];
@@ -388,7 +395,7 @@ class BoardControl {
     const data = JSON.parse(localStorage.getItem('data'));
     const tiles = data.tiles;
     const keys = data.keys;
-  
+
     tiles.forEach((el) => {
       const tile = document.querySelector(`.tile[data-tile_id="${el.tileId}"]`);
       tile.textContent = el.value.toUpperCase();
@@ -401,6 +408,14 @@ class BoardControl {
     })
 
     return
+  }
+
+  setThemeOnLoad() {
+    const toggleCheckbox = document.querySelector('#toggle_theme');
+    toggleCheckbox.checked = true;
+    document.querySelector('html').classList.add('dark');
+
+    return;
   }
 
   removeData() {
