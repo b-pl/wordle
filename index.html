@@ -12,13 +12,16 @@
   <script type='module' src="/timer.js"></script>
   <script type='module' src="/stats.js"></script>
 </head>
-<body class='flex flex-wrap max-w-full'>
-  <div class='header flex justify-center gap-4 border-b-2 border-solid border-black basis-full py-2 lg:my-8 lg:px-4 lg:py-8'>
-    <button class='button --reset p-2 border border-solid border-black rounded-lg'>Nowa gra</button>
-    <button class='button --stats p-2 border border-solid border-black rounded-lg'>Statystyki</button>
+<body class='flex flex-col max-w-full bg-[#E3E3E1] dark:bg-[#121213]'>
+  <div class='header flex justify-center gap-4 border-b-2 border-solid border-[#eeeeee] dark:border-[#818384] basis-full py-2'>
+    <button class='button --reset p-2 border border-solid border-[#eeeeee] bg-[#eeeeee] dark:border-[#818384] dark:bg-[#818384] dark:text-[#fff] rounded-lg font-bold'>Nowa gra</button>
+    <button class='button --stats p-2 border border-solid border-[#eeeeee] bg-[#eeeeee] dark:border-[#818384] dark:bg-[#818384] dark:text-[#fff] rounded-lg font-bold'>Statystyki</button>
     <div class='theme_switch relative'>
       <input type="checkbox" id="toggle_theme" class="checkbox" />
-      <label for="toggle" class="switch"></label>
+      <label for="toggle" class="switch">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" stroke-width="0" fill="currentColor" /><path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" stroke-width="0" fill="currentColor" /><path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" stroke-width="0" fill="currentColor" /><path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" stroke-width="0" fill="currentColor" /><path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" stroke-width="0" fill="currentColor" /><path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" stroke-width="0" fill="currentColor" /><path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" stroke-width="0" fill="currentColor" /><path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" stroke-width="0" fill="currentColor" /><path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" stroke-width="0" fill="currentColor" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 1.992a10 10 0 1 0 9.236 13.838c.341 -.82 -.476 -1.644 -1.298 -1.31a6.5 6.5 0 0 1 -6.864 -10.787l.077 -.08c.551 -.63 .113 -1.653 -.758 -1.653h-.266l-.068 -.006l-.06 -.002z" stroke-width="0" fill="currentColor" /></svg>
+      </label>
     </div>
   </div>
 
@@ -28,115 +31,117 @@
     <div class='debug_console border-solid border-black py-2'></div>
   </div>
 
-  <div class='container mx-auto md:max-w-3xl flex flex-col gap-2 px-4 py-4 text-4xl uppercase lg:gap-4'>
-    <div class='row flex gap-2 justify-center lg:gap-4' data-row_id='1' data-is_active='true'>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center lg:w-24 lg:h-24' data-tile_id='1' data-is_active='true'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='2'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='3'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='4'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='5'></div>
+  <div class='container mx-auto md:max-w-3xl flex flex-col gap-2 px-4 py-4 text-4xl uppercase'>
+    <div class='row flex gap-2 justify-center' data-row_id='1' data-is_active='true'>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='1' data-is_active='true'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='2'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='3'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='4'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='5'></div>
     </div>
-    <div class='row flex gap-2 justify-center lg:gap-4' data-row_id='2'>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='6'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='7'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='8'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='9'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='10'></div>
+    <div class='row flex gap-2 justify-center' data-row_id='2'>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='6'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='7'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='8'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='9'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='10'></div>
     </div>
-    <div class='row flex gap-2 justify-center lg:gap-4' data-row_id='3'>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='11'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='12'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='13'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='14'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='15'></div>
+    <div class='row flex gap-2 justify-center' data-row_id='3'>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='11'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='12'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='13'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='14'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='15'></div>
     </div>
-    <div class='row flex gap-2 justify-center lg:gap-4' data-row_id='4'>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='16'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='17'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='18'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='19'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='20'></div>
+    <div class='row flex gap-2 justify-center' data-row_id='4'>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='16'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='17'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='18'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='19'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='20'></div>
     </div>
-    <div class='row flex gap-2 justify-center lg:gap-4' data-row_id='5'>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='21'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='22'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='23'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='24'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='25'></div>
+    <div class='row flex gap-2 justify-center' data-row_id='5'>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='21'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='22'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='23'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='24'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='25'></div>
     </div>
-    <div class='row flex gap-2 justify-center lg:gap-4' data-row_id='6'>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='26'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='27'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='28'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='29'></div>
-      <div class='tile w-16 h-16 border border-solid border-black flex justify-center items-center' data-tile_id='30'></div>
+    <div class='row flex gap-2 justify-center' data-row_id='6'>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='26'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='27'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='28'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='29'></div>
+      <div class='tile w-16 h-16 border border-solid border-[#D3D6DA] dark:border-[#3A3A3C] dark:text-[#fff] font-bold flex justify-center items-center' data-tile_id='30'></div>
     </div>
   </div>
 
   <div class='keyboard container mx-auto md:max-w-3xl flex flex-col gap-2 px-2 py-2'>
-    <div class='keyboard_row row flex gap-1 lg:gap-2 justify-center'>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='ą'>ą</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='ć'>ć</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='ę'>ę</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='ł'>ł</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='ó'>ó</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='ś'>ś</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='ń'>ń</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='ż'>ż</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='ź'>ź</div>
+    <div class='keyboard_row row flex gap-1 justify-center'>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='ą'>ą</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='ć'>ć</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='ę'>ę</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='ł'>ł</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='ó'>ó</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='ś'>ś</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='ń'>ń</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='ż'>ż</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='ź'>ź</div>
     </div>
-    <div class='keyboard_row row flex gap-1 lg:gap-2 justify-center'>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='q'>q</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='w'>w</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='e'>e</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='r'>r</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='t'>t</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='y'>y</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='u'>u</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='i'>i</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='o'>o</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='p'>p</div>
+    <div class='keyboard_row row flex gap-1 justify-center'>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='q'>q</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='w'>w</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='e'>e</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='r'>r</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='t'>t</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='y'>y</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='u'>u</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='i'>i</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='o'>o</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='p'>p</div>
     </div>
-    <div class='keyboard_row row flex gap-1 lg:gap-2 justify-center'>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='a'>a</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='s'>s</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='d'>d</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='f'>f</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='g'>g</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='h'>h</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='j'>j</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='k'>k</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='l'>l</div>
+    <div class='keyboard_row row flex gap-1 justify-center'>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='a'>a</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='s'>s</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='d'>d</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='f'>f</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='g'>g</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='h'>h</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='j'>j</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='k'>k</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='l'>l</div>
     </div>
-    <div class='keyboard_row row flex gap-1 lg:gap-2 justify-center'>
-      <div class='keyboard_key keyboard_key--special --enter max-w-max border border-solid border-black text-lg font-bold p-1 lg:p-4 flex justify-center items-center uppercase' value='enter'><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-corner-down-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6v6a3 3 0 0 1 -3 3h-10l4 -4m0 8l-4 -4" /></svg></div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='z'>z</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='x'>x</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='c'>c</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='v'>v</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='b'>b</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='n'>n</div>
-      <div class='keyboard_key w-1/12 border border-solid border-black text-xl lg:text-4xl font-bold p-4 flex justify-center items-center uppercase' value='m'>m</div>
-      <div class='keyboard_key keyboard_key--special --backspace max-w-max border border-solid border-black text-lg p-1 lg:p-4 font-bold flex justify-center items-center uppercase' value='bcksp'><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-backspace-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 5a2 2 0 0 1 1.995 1.85l.005 .15v10a2 2 0 0 1 -1.85 1.995l-.15 .005h-11a1 1 0 0 1 -.608 -.206l-.1 -.087l-5.037 -5.04c-.809 -.904 -.847 -2.25 -.083 -3.23l.12 -.144l5 -5a1 1 0 0 1 .577 -.284l.131 -.009h11zm-7.489 4.14a1 1 0 0 0 -1.301 1.473l.083 .094l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.403 1.403l.094 -.083l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.403 -1.403l-.083 -.094l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.403 -1.403l-.094 .083l-1.293 1.292l-1.293 -1.292l-.094 -.083l-.102 -.07z" stroke-width="0" fill="currentColor" /></svg></div>
+    <div class='keyboard_row row flex gap-1 justify-center'>
+      <div class='keyboard_key keyboard_key--special --enter max-w-max border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-lg font-bold p-1 flex justify-center items-center uppercase' value='enter'><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-corner-down-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6v6a3 3 0 0 1 -3 3h-10l4 -4m0 8l-4 -4" /></svg></div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='z'>z</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='x'>x</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='c'>c</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='v'>v</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='b'>b</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='n'>n</div>
+      <div class='keyboard_key w-1/12 border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-xl font-bold p-4 flex justify-center items-center uppercase' value='m'>m</div>
+      <div class='keyboard_key keyboard_key--special --backspace max-w-max border border-solid border-[#D3D6DA] dark:border-[#818384] rounded-md bg-[#D3D6DA] dark:bg-[#818384] dark:text-[#fff] text-lg p-1 font-bold flex justify-center items-center uppercase' value='bcksp'><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-backspace-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 5a2 2 0 0 1 1.995 1.85l.005 .15v10a2 2 0 0 1 -1.85 1.995l-.15 .005h-11a1 1 0 0 1 -.608 -.206l-.1 -.087l-5.037 -5.04c-.809 -.904 -.847 -2.25 -.083 -3.23l.12 -.144l5 -5a1 1 0 0 1 .577 -.284l.131 -.009h11zm-7.489 4.14a1 1 0 0 0 -1.301 1.473l.083 .094l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.403 1.403l.094 -.083l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.403 -1.403l-.083 -.094l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.403 -1.403l-.094 .083l-1.293 1.292l-1.293 -1.292l-.094 -.083l-.102 -.07z" stroke-width="0" fill="currentColor" /></svg></div>
     </div>
   </div>
 
-  <dialog id='stats' class='w-1/4'>
-    <div class='stats w-full flex flex-col gap-4 px-4 py-4'>
-      <div class='stats_close text-right'><span class='close_button text-2xl cursor-pointer'>X</span></div>
+  <dialog id='stats' class='w-full lg:w-1/4 rounded-lg'>
+    <div class='stats w-full flex flex-col gap-4 px-4 py-4 bg-[#E3E3E1] dark:bg-[#273e47] rounded-lg shadow-xl'>
+      <div class='stats_close ml-auto'><span class='close_button text-2xl cursor-pointer dark:text-white'><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg></span></div>
       <div id='won_headline' class='stats_headline endgame_headline text-center text-5xl font-bold mb-6 text-green-500 hidden'>Zwycięstwo!</div>
       <div id='lost_headline' class='stats_headline endgame_headline text-center text-5xl font-bold mb-6 text-red-500 hidden'>Porażka!</div>
-      <div class='stats_headline text-center text-5xl font-bold mb-6'>Statystyki</div>
-      <div class='stats_items flex flex-col py-2 text-xl font-bold'>
-        <div class='item --lowTime flex gap-4 py-2'><span class='item_key flex-initial'>Najlepszy czas:</span><span class='item_value flex-grow'></span></div>
-        <div class='item --highTime flex gap-4 py-2 bg-slate-200'><span class='item_key flex-initial'>Najgorszy czas:</span><span class='item_value flex-grow'></span></div>
-        <div class='item --timesPlayed flex gap-4 py-2'><span class='item_key flex-initial'>Rozgrywek:</span><span class='item_value flex-grow'></span></div>
-        <div class='item --timesWon flex gap-4 py-2 bg-slate-200'><span class='item_key flex-initial'>Zwyciężonych:</span><span class='item_value flex-grow'></span></div>
-        <div class='item --timesLost flex gap-4 py-2'><span class='item_key flex-initial'>Przegranych:</span><span class='item_value flex-grow'></span></div>
-        <div class='item --currentWinStreak flex gap-4 py-2 bg-slate-200'><span class='item_key flex-initial'>Passa wygranych:</span><span class='item_value flex-grow'></span></div>
-        <div class='item --highestWinStreak flex gap-4 py-2'><span class='item_key flex-initial'>Najdłuższa passa wygranych:</span><span class='item_value flex-grow'></span></div>
-        <div class='item --word flex gap-4 py-2 text-5xl uppercase justify-center'></div>
+      <div class='stats_headline text-center text-4xl lg:text-5xl font-bold dark:text-white'>Statystyki</div>
+      <div class='stats_items grid grid-cols-2 gap-2 text-white dark:text-black py-2 text-xl font-bold'>
+        <div class='item --lowTime flex flex-col items-center basis-1/2 mb-2 py-2 bg-[#1B998B] dark:bg-[#7983ff] border border-solid border-[#1B998B] dark:border-[#7983ff] rounded-lg'><span class='item_key text-center'>Najlepszy czas:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --highTime flex flex-col items-center basis-1/2 mb-2 py-2 bg-[#1B998B] dark:bg-[#7983ff] border border-solid border-[#1B998B] dark:border-[#7983ff] rounded-lg'><span class='item_key text-center'>Najgorszy czas:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --timesPlayed flex flex-col items-center basis-1/2 mb-2 py-2 bg-[#1B998B] dark:bg-[#7983ff] border border-solid border-[#1B998B] dark:border-[#7983ff] rounded-lg'><span class='item_key text-center'>Rozgrywek:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --timesWon flex flex-col items-center basis-1/2 mb-2 py-2 bg-[#1B998B] dark:bg-[#7983ff] border border-solid border-[#1B998B] dark:border-[#7983ff] rounded-lg'><span class='item_key text-center'>Zwyciężonych:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --timesLost flex flex-col items-center basis-1/2 mb-2 py-2 bg-[#1B998B] dark:bg-[#7983ff] border border-solid border-[#1B998B] dark:border-[#7983ff] rounded-lg'><span class='item_key text-center'>Przegranych:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --currentWinStreak flex flex-col items-center basis-1/2 mb-2 py-2 bg-[#1B998B] dark:bg-[#7983ff] border border-solid border-[#1B998B] dark:border-[#7983ff] rounded-lg'><span class='item_key text-center'>Passa wygranych:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --highestWinStreak flex flex-col items-center basis-1/2 mb-2 py-2 bg-[#1B998B] dark:bg-[#7983ff] border border-solid border-[#1B998B] dark:border-[#7983ff] rounded-lg'><span class='item_key text-center'>Najdłuższa passa wygranych:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --progress flex flex-col items-center basis-1/2 mb-2 py-2 bg-[#1B998B] dark:bg-[#7983ff] border border-solid border-[#1B998B] dark:border-[#7983ff] rounded-lg'><span class='item_key text-center'>Odgadniętych:</span><span class='item_value flex-grow'></span></div>
+        <div class='item --word col-span-2 flex flex-col items-center basis-1/2 mb-2 py-2 text-5xl uppercase justify-center bg-[#1B998B] dark:bg-[#7983ff] border border-solid border-[#1B998B] dark:border-[#7983ff] rounded-lg hidden'></div>
       </div>
+      
     </div>
   </dialog>
 </body>

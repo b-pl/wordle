@@ -392,12 +392,12 @@ class BoardControl {
     tiles.forEach((el) => {
       const tile = document.querySelector(`.tile[data-tile_id="${el.tileId}"]`);
       tile.textContent = el.value.toUpperCase();
-      tile.dataset.marked = el.marked ? el.marked : '';
+      (el.marked && el.marked !== '') ? tile.dataset.marked = el.marked : '';
     })
   
     keys.forEach((el) => {
       const key = document.querySelector(`.keyboard_key[value="${el.value}"]`)
-      key.dataset.marked = el.marked
+      key.dataset.marked = el.marked && el.marked !== '' ? el.marked : '';
     })
 
     return
