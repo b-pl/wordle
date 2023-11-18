@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "tail": "npx tailwindcss -i ./styles.css -o ./style.css --watch"
+    "tail": "npx tailwindcss -i ./styles.css -o ./style.css --watch",
+    "git-lg": "git log --oneline -n 5"
   }
 }
