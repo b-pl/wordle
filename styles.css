@@ -2,20 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-[data-marked="correctPosition"] {
-  background: lightgreen;
+[data-marked="correctPosition"],
+[data-iswon=true] > * {
+  background: #F5793A;
 }
 
 [data-marked="inWord"] {
-  background: lightblue;
+  background: #85C0F9;
 }
 
-[data-marked="notInWord"] {
-  background: lightgray;
+[data-marked="notInWord"],
+[data-marked=""] {
+  background: #787C7E;
+  color: #fff;
 }
 
-[data-iswon=true] > * {
-  background: lightgreen;
+.dark [data-marked="correctPosition"],
+.dark [data-iswon=true] > * {
+  background-color: #F5793A !important;
+  border-color: #F5793A !important;
+}
+
+.dark [data-marked="inWord"] {
+  background: #85C0F9 !important;
+  border-color: #85C0F9 !important;
+}
+
+.dark [data-marked="notInWord"],
+.dark [data-marked=""] {
+  background: #3A3A3C !important;
+  border-color: #3A3A3C !important;
+  color: #fff !important;
 }
 
 .switch { 
@@ -39,11 +56,53 @@
   transition: all 0.3s;
 }
 
+.switch .icon-tabler-moon-filled {
+  position: absolute;
+  top: 9px;
+  right: 8px;
+  transform: rotateY(180deg);
+  z-index: 100;
+  color: #909090;
+}
+
+.switch .icon-tabler-sun-filled {
+  position: absolute;
+  top: 9px;
+  left: 7px;
+  z-index: 100;
+  color: #909090;
+}
+
+/* .theme_switch::before {
+  content: url('/moon.svg');
+  position: absolute;
+  top: 9px;
+  right: 8px;
+  transform: rotateY(180deg);
+  z-index: 100;
+}
+
+.theme_switch::after {
+  content: url('/sun.svg');
+  position: absolute;
+  top: 9px;
+  left: 7px;
+  z-index: 100;
+} */
+
 .checkbox:checked + .switch::after {
   left : 44px; 
 }
+
 .checkbox:checked + .switch {
   background-color: #7983ff;
+}
+
+/* .checkbox:checked + .switch .icon-tabler-moon-filled {
+  color: #909090;
+} */
+.checkbox:checked + .switch .icon-tabler-sun-filled {
+  color: #fff;
 }
 
 .checkbox { 
